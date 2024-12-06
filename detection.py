@@ -1,5 +1,5 @@
-import cv2
 import os
+import cv2
 import numpy as np
 import tensorflow as tf
 from tensorflow.keras.models import load_model
@@ -134,15 +134,16 @@ def process_frame(frame, model, max_regions=10):
     return frame
 
 def main():
+    
     st.title("Food Detection App")
     
     model = load_detection_model()
     
     st.write("Choose detection mode:")
-    detection_mode = st.radio("", ["Image Upload", "Real-time Camera"])
+    detection_mode = st.radio("Select Detection Mode:", ["Image Upload", "Real-time Camera"])
     
     if detection_mode == "Image Upload":
-        uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png"])
+        uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png"], label_visibility="collapsed")
         
         if uploaded_file is not None:
             image_bytes = uploaded_file.read()
