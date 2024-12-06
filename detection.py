@@ -158,7 +158,7 @@ def main():
     
     else:
         st.write("Real-time detection mode")
-        camera = cv2.VideoCapture(3)
+        camera = cv2.VideoCapture(4)
         
         if not camera.isOpened():
             st.error("Camera not found or not accessible. Please check your camera setup.")
