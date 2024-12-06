@@ -5,12 +5,29 @@ from tensorflow.keras.models import load_model
 import streamlit as st
 from time import time
 from PIL import Image
+import gdown
+from tqdm import tqdm
 import io
+
+MODEL_ID = '1FMXOk9ifEoZDl4c7NzpANiP2o_Ednt7P' 
+MODEL_PATH = 'FINAL_MODEL.h5'
 
 # Load model
 @st.cache_resource
 def load_detection_model():
-    return load_model('FINAL_MODEL.h5')
+    try:
+        if not os.path.exists(MODEL_PATH):
+            st.info("Downloading model from Google Drive...")
+            url = f'https://drive.google.com/uc?id={MODEL_ID}'
+            gdown.download(url, MODEL_PATH, quiet=False)
+        
+        model = tf.keras.models.load_model(MODEL_PATH)
+        return model
+    except Exception as e:
+        st.error(f"Error loading model: {str(e)}")
+        return None
+
+model = load_detection_model()
 
 # Define class names
 class_names = ['buah', 'karbohidrat', 'minuman', 'protein', 'sayur']
