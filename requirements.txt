@@ -1,0 +1,12 @@
+streamlit
+streamlit-option-menu
+tensorflow
+opencv-python-headless
+numpy
+Pillow
+gdown
+requests
+tqdm
+streamlit-webrtc
+tensorflow-io-gcs-filesystem
+requests
