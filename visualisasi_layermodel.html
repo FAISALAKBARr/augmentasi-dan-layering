@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #fafafa;
+        }
+        .title {
+            text-align: center;
+            padding: 20px;
+            margin-bottom: 30px;
+            background: #333;
+            color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .architecture {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+        .layer-block {
+            border: 2px solid #333;
+            border-radius: 8px;
+            padding: 15px;
+            width: 95%;
+            position: relative;
+            background: #fff;
+        }
+        .layer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
+        .layer-visual {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+        .layer-info {
+            flex: 1;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 5px;
+        }
+        .conv-box {
+            width: 80px;
+            height: 80px;
+            background: #FFE4E1;
+            border: 2px solid #FF6B6B;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            text-align: center;
+        }
+        .pool-box {
+            width: 60px;
+            height: 60px;
+            background: #E0FFFF;
+            border: 2px solid #4682B4;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            text-align: center;
+        }
+        .dense-box {
+            width: 120px;
+            height: 40px;
+            background: #E6E6FA;
+            border: 2px solid #9370DB;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+        }
+        .bn-box {
+            width: 80px;
+            height: 40px;
+            background: #FFDAB9;
+            border: 2px solid #DEB887;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+        }
+        .dropout-box {
+            width: 80px;
+            height: 40px;
+            background: #98FB98;
+            border: 2px solid #3CB371;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+        }
+        .arrow {
+            font-size: 24px;
+            color: #666;
+        }
+        .title h1 {
+            margin: 0;
+            font-size: 28px;
+            font-weight: 600;
+        }
+        h3 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+        .function-list {
+            margin: 0;
+            padding-left: 20px;
+            font-size: 14px;
+        }
+        .function-list li {
+            margin-bottom: 5px;
+        }
+        .footer {
+            text-align: center;
+            padding: 20px;
+            margin-top: 30px;
+            background: #333;
+            color: white;
+            border-radius: 10px;
+            box-shadow: 0 -4px 6px rgba(0,0,0,0.1);
+        }
+        .footer p {
+            margin: 0;
+            font-size: 14px;
+        }
+        .footer .logo {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="title">
+            <h1>Layering Model</h1>
+        </div>
+        <div class="architecture">
+            <div class="layer-block">
+                <h3>Input Layer</h3>
+                <div class="layer-content">
+                    <div class="layer-visual">
+                        <div class="conv-box">
+                            IMG_SIZE x IMG_SIZE x 3
+                        </div>
+                    </div>
+                    <div class="layer-info">
+                        <ul class="function-list">
+                            <li>Menerima gambar input RGB</li>
+                            <li>3 channel warna (Red, Green, Blue)</li>
+                            <li>Dimensi: (tinggi x lebar x channel)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="arrow">↓</div>
+
+            <div class="layer-block">
+                <h3>Convolutional Block</h3>
+                <div class="layer-content">
+                    <div class="layer-visual">
+                        <div class="conv-box">Conv2D</div>
+                        <div class="bn-box">BatchNorm</div>
+                        <div class="pool-box">MaxPool 2x2</div>
+                        <div class="dropout-box">Dropout</div>
+                    </div>
+                    <div class="layer-info">
+                        <ul class="function-list">
+                            <li><strong>Conv2D:</strong> Ekstraksi fitur menggunakan filter 3x3</li>
+                            <li><strong>BatchNorm:</strong> Normalisasi data untuk training yang stabil</li>
+                            <li><strong>MaxPool:</strong> Reduksi dimensi (2x2)</li>
+                            <li><strong>Dropout:</strong> Mencegah overfitting</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="arrow">↓</div>
+
+            <div class="layer-block">
+                <h3>Dense Layers (Classifier)</h3>
+                <div class="layer-content">
+                    <div class="layer-visual">
+                        <div class="dense-box">Dense 512</div>
+                        <div class="dense-box">Dense 256</div>
+                        <div class="dense-box">Output (5)</div>
+                    </div>
+                    <div class="layer-info">
+                        <ul class="function-list">
+                            <li><strong>Dense 512:</strong> Layer fully connected pertama</li>
+                            <li><strong>Dense 256:</strong> Reduksi dimensi untuk feature learning</li>
+                            <li><strong>Output:</strong> 5 neuron dengan aktivasi softmax</li>
+                            <li><strong>Dropout:</strong> 0.5 untuk mencegah overfitting</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="layer-block">
+                <h3>Fungsi Aktivasi dan Regularisasi</h3>
+                <div class="layer-content">
+                    <div class="layer-info">
+                        <ul class="function-list">
+                            <li><strong>ReLU:</strong> Aktivasi non-linear, memungkinkan model belajar pola kompleks</li>
+                            <li><strong>BatchNormalization:</strong> Mempercepat training dan meningkatkan stabilitas</li>
+                            <li><strong>Dropout:</strong> Menonaktifkan neuron secara acak saat training</li>
+                            <li><strong>Softmax:</strong> Mengubah output menjadi probabilitas untuk klasifikasi</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer">
+                <div class="logo">© 2023 Andromeda. All rights reserved.</div>
+                <p>Building AI Technology</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
