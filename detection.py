@@ -10,7 +10,7 @@ import gdown
 from tqdm import tqdm
 import io
 
-MODEL_ID = '1FMXOk9ifEoZDl4c7NzpANiP2o_Ednt7P' 
+MODEL_ID = '1FMXOk9ifEoZDl4c7NzpANiP2o_Ednt7P'
 MODEL_PATH = 'FINAL_MODEL.h5'
 
 # Load model
@@ -134,7 +134,6 @@ def process_frame(frame, model, max_regions=10):
     return frame
 
 def main():
-    
     st.title("Food Detection App")
     
     model = load_detection_model()
@@ -159,20 +158,24 @@ def main():
     
     else:
         st.write("Real-time detection mode")
-        run = st.checkbox('Start/Stop')
-        FRAME_WINDOW = st.image([])
         camera = cv2.VideoCapture(0)
         
-        while run:
-            ret, frame = camera.read()
-            if not ret:
-                st.error("Failed to access camera")
-                break
-                
-            processed_frame = process_frame(frame, model)
-            FRAME_WINDOW.image(cv2.cvtColor(processed_frame, cv2.COLOR_BGR2RGB))
-        
-        camera.release()
+        if not camera.isOpened():
+            st.error("Camera not found or not accessible. Please check your camera setup.")
+        else:
+            run = st.checkbox('Start/Stop')
+            FRAME_WINDOW = st.image([])
+            
+            while run:
+                ret, frame = camera.read()
+                if not ret:
+                    st.error("Unable to read frame from camera.")
+                    break
+
+                processed_frame = process_frame(frame, model)
+                FRAME_WINDOW.image(cv2.cvtColor(processed_frame, cv2.COLOR_BGR2RGB))
+            
+            camera.release()
 
 if __name__ == "__main__":
     main()
